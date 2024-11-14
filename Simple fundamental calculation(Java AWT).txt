@@ -1,0 +1,271 @@
+//Simple fundamental calculation and menu bar with exit
+
+import java.awt.*;
+import java.awt.event.*;
+
+class Page_AWT implements ActionListener {
+    Frame f;
+    Panel p;
+    Button b1, b2, b3, b4, bsum, bsub, bmul, bdiv, bmod;
+    Menu m1, m2, m3;
+    MenuBar mb;
+    Dialog d;
+    Label l;
+    TextField tfn1, tfn2, tfn3, tfn4, tfn5, tfn6, tfn7; // Declare variables here
+
+    Page_AWT() {
+        f = new Frame("Navigation:");
+        p = new Panel();
+        b1 = new Button("Yes");
+        b2 = new Button("No");
+        b3 = new Button("LIGHT MODE");
+        b4 = new Button("DARK MODE");
+        m1 = new Menu("File");
+        m2 = new Menu("Edit");
+        m3 = new Menu("Exit");
+        mb = new MenuBar();
+        Label l1 = new Label("Name:");
+        TextField tf1 = new TextField(20);
+        Label l2 = new Label("Country:");
+        TextField tf2 = new TextField(20);
+        Label l3 = new Label("Age:");
+        TextField tf3 = new TextField(20);
+
+        MenuItem mi1 = new MenuItem("New tab");
+        MenuItem mi2 = new MenuItem("New window");
+        MenuItem mi3 = new MenuItem("Open");
+        MenuItem mi4 = new MenuItem("Crop");
+        MenuItem mi5 = new MenuItem("Zoom in");
+        MenuItem mi6 = new MenuItem("Zoom out");
+        MenuItem mi7 = new MenuItem("Frame");
+        MenuItem mi8 = new MenuItem("Save");
+        MenuItem mi9 = new MenuItem("Save as");
+        MenuItem mi10 = new MenuItem("Save all");
+        MenuItem mi11 = new MenuItem("Page setup");
+        MenuItem mi12 = new MenuItem("Print");
+        MenuItem mi13 = new MenuItem("Close tab");
+        MenuItem mi14 = new MenuItem("Close window");
+        MenuItem exitItem = new MenuItem("Exit");
+
+        d = new Dialog(f, "Dialog", false);
+        l = new Label("Are you sure you want to exit?");
+        p.add(l1);
+        p.add(tf1);
+        p.add(l2);
+        p.add(tf2);
+        p.add(l3);
+        p.add(tf3);
+
+        Label tx = new Label("Text anything : ");
+        tx.setForeground(Color.red);
+        p.add(tx);
+        TextArea ta = new TextArea(3, 80);
+        p.add(ta);
+        ta.setForeground(Color.red);
+
+        Label ln1 = new Label("Enter your first number:");
+        tfn1 = new TextField(70); // Initialize here
+        p.add(ln1);
+        p.add(tfn1);
+        Label ln2 = new Label("Enter your second number:");
+        tfn2 = new TextField(70); // Initialize here
+        p.add(ln2);
+        p.add(tfn2);
+        Label ln3 = new Label("ADDITION:");
+        tfn3 = new TextField(20); // Initialize here
+        p.add(ln3);
+        p.add(tfn3);
+
+        Label ln4 = new Label("SUBSTRACTION:");
+        tfn4 = new TextField(20); // Initialize here
+        p.add(ln4);
+        p.add(tfn4);
+
+        Label ln5 = new Label("MULTIPLICATION:");
+        tfn5 = new TextField(20); // Initialize here
+        p.add(ln5);
+        p.add(tfn5);
+
+        Label ln6 = new Label("DIVISION:");
+        tfn6 = new TextField(20); // Initialize here
+        p.add(ln6);
+        p.add(tfn6);
+
+        Label ln7 = new Label("MODULO:");
+        tfn7 = new TextField(30); // Initialize here
+        p.add(ln7);
+        p.add(tfn7);
+
+
+        bsum = new Button("ADDITION"); // Initialize here
+        p.add(bsum);
+        bsum.addActionListener(this);
+
+        bsub = new Button("SUBSTRACTION"); // Initialize here
+        p.add(bsub);
+        bsub.addActionListener(this);
+
+        bmul = new Button("MULTIPLICATION"); // Initialize here
+        p.add(bmul);
+        bmul.addActionListener(this);
+
+        bdiv = new Button("DIVISION"); // Initialize here
+        p.add(bdiv);
+        bdiv.addActionListener(this);
+
+        bmod = new Button("MODULO:"); // Initialize here
+        p.add(bmod);
+        bmod.addActionListener(this);
+
+        f.setMenuBar(mb);
+        f.setBackground(Color.PINK);
+        b3.setForeground(Color.blue);
+        b4.setForeground(Color.blue);
+        mb.add(m1);
+        mb.add(m2);
+        mb.add(m3);
+
+        m1.add(mi1);
+        m1.add(mi2);
+        m1.add(mi3);
+        m1.add(mi8);
+        m1.add(mi9);
+        m1.add(mi10);
+        m1.add(mi11);
+        m1.add(mi12);
+        m1.add(mi13);
+        m1.add(mi14);
+
+        m2.add(mi4);
+        m2.add(mi5);
+        m2.add(mi6);
+        m2.add(mi7);
+
+        m3.add(exitItem);
+
+        exitItem.addActionListener(this);
+        b1.addActionListener(this);
+        b2.addActionListener(this);
+        b3.addActionListener(this);
+        b4.addActionListener(this);
+
+        p.add(b3);
+        p.add(b4);
+
+        f.setSize(270, 270);
+        f.add(p);
+        f.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent we) {
+                System.exit(0);
+            }
+        });
+
+        f.setVisible(true);
+        d.setLayout(new FlowLayout());
+        d.add(l);
+        d.add(b1);
+        d.add(b2);
+        d.setSize(300, 120);
+        d.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent de) {
+                System.exit(0);
+            }
+        });
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        Color color = null;
+        if (e.getSource() == b3) {
+            color = Color.white;
+            System.out.println("LIGHT MODE WORKING.");
+        }
+        if (e.getSource() == b4) {
+            color = Color.black;
+            System.out.println("DARK MODE WORKING.");
+        }
+        if (color != null) {
+            f.setBackground(color);
+            p.setBackground(color);
+        }
+
+        if (e.getSource() instanceof MenuItem) {
+            MenuItem source = (MenuItem) e.getSource();
+            if (source.getLabel().equals("Exit")) {
+                d.setVisible(true);
+            }
+        }
+        if (e.getSource() == b1) {
+            System.exit(0);
+        }
+        if (e.getSource() == b2) {
+            d.setVisible(false);
+        }
+
+        // Ensure no typo in method names
+        if (e.getSource() == bsum) {
+            int a, b, c0, c1, c2, c3, c4;
+            try {
+                a = Integer.parseInt(tfn1.getText());
+                b = Integer.parseInt(tfn2.getText());
+                c0 = a + b;
+                tfn3.setText(String.valueOf(c0)); // Ensure correct method call
+
+            } catch (NumberFormatException nfe) {
+                System.out.println("Invalid number input.");
+            }
+        }
+        if (e.getSource() == bsub) {
+            int a, b, c0, c1, c2, c3, c4;
+            try {
+                a = Integer.parseInt(tfn1.getText());
+                b = Integer.parseInt(tfn2.getText());
+                c1 = a - b;
+                tfn4.setText(String.valueOf(c1)); // Ensure correct method call
+
+            } catch (NumberFormatException nfe) {
+                System.out.println("Invalid number input.");
+            }
+        }
+        if (e.getSource() == bmul) {
+            int a, b, c0, c1, c2, c3, c4;
+            try {
+                a = Integer.parseInt(tfn1.getText());
+                b = Integer.parseInt(tfn2.getText());
+                c2 = a * b;
+                tfn5.setText(String.valueOf(c2)); // Ensure correct method call
+
+            } catch (NumberFormatException nfe) {
+                System.out.println("Invalid number input.");
+            }
+        }
+        if (e.getSource() == bdiv) {
+            double a, b, c0, c1, c2, c3, c4;
+            try {
+                a = Integer.parseInt(tfn1.getText());
+                b = Integer.parseInt(tfn2.getText());
+                c3 = a / b;
+                tfn6.setText(String.valueOf(c3)); // Ensure correct method call
+
+            } catch (NumberFormatException nfe) {
+                System.out.println("Invalid number input.");
+            }
+        }
+        if (e.getSource() == bmod) {
+            int a, b, c0, c1, c2, c3, c4;
+            try {
+                a = Integer.parseInt(tfn1.getText());
+                b = Integer.parseInt(tfn2.getText());
+                c4 = a % b;
+                tfn7.setText(String.valueOf(c4)); // Ensure correct method call
+
+            } catch (NumberFormatException nfe) {
+                System.out.println("Invalid number input.");
+            }
+        }
+    }
+
+
+        public static void main(String[] args) {
+            new Page_AWT();
+        }
+    }

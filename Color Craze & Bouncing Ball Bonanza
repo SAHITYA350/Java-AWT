@@ -1,0 +1,81 @@
+//"Color Craze & Bouncing Ball Bonanza"
+
+import java.awt.*;
+import java.awt.event.*;
+import java.util.Random;
+
+public class Main extends Frame implements ActionListener, Runnable {
+    Button button;
+    String[] funnyMessages = {
+            "Allways follow your dreams..",
+            "Dont trust everyone!!",
+            "Hard work beats talent..",
+            "You are never good enough!!",
+            "Fight until you win!!",
+            "Never give up!!",
+            "Level up yourself to sucess!!",
+            "With hardwork you can also break the limits!!",
+            "Mind is powerful weapon!!",
+            "Cross your limits!!"
+    };
+    Color[] colors = {Color.RED, Color.GREEN, Color.BLUE, Color.YELLOW, Color.CYAN, Color.MAGENTA};
+    int x = 100, y = 100, dx =7, dy = 7;                  //position and movement
+    Thread t;
+
+    Main() {
+        // Frame setup
+        setTitle("Always remember.....");
+        setSize(500, 400);
+        setLayout(new FlowLayout());
+        button = new Button("Click until you stop!");
+        button.addActionListener(this);
+        add(button);
+        setVisible(true);
+
+        // Start animation thread
+        t = new Thread(this);
+        t.start();
+
+        // Window close operation
+        addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent we) {
+                System.exit(0);
+            }
+        });
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        Random rand = new Random();
+        Color randomColor = colors[rand.nextInt(colors.length)];
+        String randomMessage = funnyMessages[rand.nextInt(funnyMessages.length)];
+        setBackground(randomColor);
+        setTitle(randomMessage);
+    }
+
+    @Override
+    public void paint(Graphics g) {
+        g.setColor(Color.black);
+        g.fillOval(x, y, 27, 27);
+    }
+
+    @Override
+    public void run() {
+        while (true) {
+            x += dx;   //increament
+            y += dy;
+            if (x < 0 || x > getWidth() - 30) dx = -dx;
+            if (y < 0 || y > getHeight() - 30) dy = -dy;
+            repaint();
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        new Main();
+    }
+}
